@@ -24,7 +24,7 @@ const bacaData = (fnCallback) => {
 
   fs.readFile(file1, { encoding: "utf8" }, (err, data1) => {
     if (err) {
-      return err;
+      fnCallback(err, null);
     } else {
       let temp = JSON.parse(data1).message.split(" ");
       arrString.push(temp[1]);
@@ -32,7 +32,7 @@ const bacaData = (fnCallback) => {
 
     fs.readFile(file2, { encoding: "utf8" }, (err, data2) => {
       if (err) {
-        return err;
+        fnCallback(err, null);
       } else {
         let temp = JSON.parse(data2)[0].message.split(" ");
         arrString.push(temp[1]);
@@ -40,16 +40,16 @@ const bacaData = (fnCallback) => {
 
       fs.readFile(file3, { encoding: "utf8" }, (err, data3) => {
         if (err) {
-          return err;
+          fnCallback(err, null);
         } else {
           let temp = JSON.parse(data3)[0].data.message.split(" ");
           arrString.push(temp[1]);
+
+          fnCallback(null, arrString);
         }
       });
     });
   });
-
-  fnCallback(null, arrString);
 };
 
 // ! JANGAN DIMODIFIKASI
